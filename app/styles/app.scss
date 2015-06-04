@@ -1,0 +1,10 @@
+$fontFamily: Arial, Helvetica, sans-serif;
+$color: cornflowerblue;
+
+body {
+  font-family: $fontFamily;
+}
+
+.test {
+  color: $color;
+}
