@@ -16,7 +16,7 @@ To install and start the live server use the following commands:
 git clone https://github.com/davorbadrov/angular-boilerplate.git [project dir]
 cd [project dir]
 npm install
-gulp
+gulp # after running gulp you can access the app on localhost:5000
 ```
 The Gulp configuration works by watching and building all the views, scripts and styles, and copying them into the dist folder which is server over Express/LiveReload, default address is localhost:5000 but can be changed in the *gulpfile.js*.
 
