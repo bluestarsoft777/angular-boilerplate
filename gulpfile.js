@@ -4,7 +4,8 @@ var gulp = require('gulp'),
     eslint = require('gulp-eslint'),
     browserify = require('gulp-browserify'),
     concat = require('gulp-concat'),
-    rimraf = require('gulp-rimraf'),
+    vinylPaths = require('vinyl-paths'),
+    del = require('del'),
     sass = require('gulp-sass'),
     autoprefixer = require('gulp-autoprefixer');
 
@@ -23,24 +24,22 @@ server.use(livereload({port: livereloadport}));
 server.use(express.static('./dist'));
 // Because I like HTML5 pushstate .. this redirects everything back to our index.html
 server.all('/*', function(req, res) {
-  res.sendfile('index.html', { root: 'dist' });
+  res.sendFile('index.html', { root: 'dist' });
 });
 
 // Dev task
-gulp.task('dev', ['clean', 'views', 'styles', 'lint', 'browserify'], function() { });
+gulp.task('dev', ['views', 'styles', 'lint', 'browserify'], function() { });
+gulp.task('build', ['clean', 'views', 'styles', 'lint', 'browserify'], function() { });
 
-// Clean task
-gulp.task('clean', function() {
-	gulp.src('./dist/views', { read: false }) // much faster
-  .pipe(rimraf({force: true}));
-});
+// Clean task - Deletes the output directories
+gulp.task('clean', del.bind(null, ['.tmp', 'dist'], {force: true}));
 
 // ESLint task
 gulp.task('lint', function() {
   gulp.src('./app/scripts/*.js')
   .pipe(eslint())
   // You can look into pretty reporters as well, but that's another story
-  .pipe(eslint.format('checkstyle'));
+  .pipe(eslint.format());
 });
 
 // Styles task
@@ -57,7 +56,7 @@ gulp.task('styles', function() {
 // Browserify task
 gulp.task('browserify', function() {
   // Single point of entry (make sure not to src ALL your files, browserify will figure it out)
-  gulp.src(['app/scripts/main.js'])
+  gulp.src(['app/scripts/app.js'])
   .pipe(browserify({
     insertGlobals: true,
     debug: false
@@ -65,7 +64,7 @@ gulp.task('browserify', function() {
   // Bundle to a single file
   .pipe(concat('bundle.js'))
   // Output it to our dist folder
-  .pipe(gulp.dest('dist/js'));
+  .pipe(gulp.dest('dist/scripts'));
 });
 
 // Views task
@@ -101,8 +100,7 @@ gulp.task('watch', ['lint'], function() {
     'views'
   ]);
 
-  gulp.watch('./dist/**').on('change', refresh.changed);
-
+// gulp.watch('./dist/**').on('change', refresh.changed);
 });
 
 gulp.task('default', ['dev', 'watch']);
