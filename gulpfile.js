@@ -4,7 +4,6 @@ var gulp = require('gulp'),
     eslint = require('gulp-eslint'),
     browserify = require('gulp-browserify'),
     concat = require('gulp-concat'),
-    vinylPaths = require('vinyl-paths'),
     del = require('del'),
     sass = require('gulp-sass'),
     autoprefixer = require('gulp-autoprefixer');
