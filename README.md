@@ -2,7 +2,7 @@
 This is an Angular/Sass boilerplate based on Angular 1.4 version, it uses Gulp as a build tool, it's still a work in progress and is based on this [Angular boilerplate] and will probably be subjected to change over time.
 
 ## About the boilerplate
-The boilerplate has no predefined style/way of usage. It's uses the following tools:
+The boilerplate has no predefined style/way of usage. It uses the following tools:
 - Gulp
 - Browserify
 - ESLint
